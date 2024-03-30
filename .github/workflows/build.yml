@@ -1,0 +1,35 @@
+name: Build DotNet Project
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Download References
+      run: |
+        mkdir -p lib
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/*"
+
+    - name: Create Counters+.csproj.user file
+      run: |
+        echo '<?xml version="1.0" encoding="utf-8"?>' > Counters+.csproj.user
+        echo '<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">' >> Counters+.csproj.user
+        echo '  <PropertyGroup>' >> Counters+.csproj.user
+        echo '    <ReferencePath>' >> Counters+.csproj.user
+        echo "      ${GITHUB_WORKSPACE}/lib;${GITHUB_WORKSPACE}/lib/Libs;${GITHUB_WORKSPACE}/lib/Plugins" >> Counters+.csproj.user
+        echo '    </ReferencePath>' >> Counters+.csproj.user
+        echo "    <BeatSaberDir>${GITHUB_WORKSPACE}/lib</BeatSaberDir>" >> Counters+.csproj.user
+        echo '  </PropertyGroup>' >> Counters+.csproj.user
+        echo '</Project>' >> Counters+.csproj.user
+
+    - name: Build
+      run: dotnet build
