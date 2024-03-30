@@ -14,10 +14,33 @@ jobs:
       with:
         dotnet-version: '6.0.x'
 
-    - name: Download References
+    - name: Download Game References
       run: |
         mkdir -p lib
-        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/*"
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/DataModels.dll"
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/HMLib.dll"
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/HMUI.dll"
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/Main.dll"
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/Unity.TextMeshPro.dll"
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/UnityEngine.dll"
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/UnityEngine.CoreModule.dll"
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/UnityEngine.UI.dll"
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/UnityEngine.UIElementsModule.dll"
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/UnityEngine.UIModule.dll"
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/UnityEngine.VRModule.dll"
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/Zenject.dll"
+        wget -P lib "https://github.com/beat-forge/beatsaber-stripped/raw/main/versions/1.35.0/Beat%20Saber_Data/Managed/Zenject-usage.dll"
+
+    - name: Download Plugin References
+      run: |
+        mkdir -p temp
+        cd temp
+        curl -LJO https://github.com/monkeymanboy/BeatSaberMarkupLanguage/releases/download/v1.9.2/BeatSaberMarkupLanguage-v1.9.2-RELEASE.zip
+        unzip -q BeatSaberMarkupLanguage-v1.9.2-RELEASE.zip
+        cd ..
+
+    - name: List Extracted Files
+      run: ls -R temp
 
     - name: Create Counters+.csproj.user file
       run: |
