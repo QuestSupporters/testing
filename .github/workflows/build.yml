@@ -43,8 +43,6 @@ jobs:
         unzip -q BSIPA-net472-x64.zip
         unzip -q SiraUtil-3.1.7.zip
 
-    - name: List Extracted Files
-
     - name: Create Counters+.csproj.user file
       run: |
         echo '<?xml version="1.0" encoding="utf-8"?>' > Counters+.csproj.user
