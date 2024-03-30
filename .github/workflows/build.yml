@@ -33,14 +33,17 @@ jobs:
 
     - name: Download Plugin References
       run: |
-        mkdir -p temp
-        cd temp
         curl -LJO https://github.com/monkeymanboy/BeatSaberMarkupLanguage/releases/download/v1.9.2/BeatSaberMarkupLanguage-v1.9.2-RELEASE.zip
+        curl -LJO https://github.com/nike4613/BeatSaber-IPA-Reloaded/releases/download/4.3.3/BSIPA-net472-x64.zip
+        curl -LJO https://github.com/Auros/SiraUtil/releases/download/3.1.7/SiraUtil-3.1.7.zip
+
+    - name: Extract Plugin References
+      run: |
         unzip -q BeatSaberMarkupLanguage-v1.9.2-RELEASE.zip
-        cd ..
+        unzip -q BSIPA-net472-x64.zip
+        unzip -q SiraUtil-3.1.7.zip
 
     - name: List Extracted Files
-      run: ls -R temp
 
     - name: Create Counters+.csproj.user file
       run: |
